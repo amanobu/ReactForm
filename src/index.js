@@ -19,7 +19,7 @@ class NameForm extends React.Component {
         this.handleBlur=this.handleBlur.bind(this);
     }
 
-    getName(){
+    getValue(){
         //console.log('NameFormComponent getName() called:'+getObjectStr(this.state.name));
         return this.state.name;
     }
@@ -27,16 +27,7 @@ class NameForm extends React.Component {
     handleChange(event){
         //console.log(event);
         const name = this.state.name;
-        switch(event.target.name){
-        case 'lname':
-            name.lname = event.target.value;
-            break;
-        case 'fname':
-            name.fname = event.target.value;
-            break;
-        default:
-            break;
-        }
+        name[event.target.name] = event.target.value;
 
         //Changeイベント毎に値を設定する必要がある模様
         //でないと、キーを押した物が画面に反映されない
@@ -68,35 +59,16 @@ class NameForm extends React.Component {
 class FormROOT extends React.Component {
     constructor(props){
         super(props);
-        //どうもこの記述が無いとstateが無いと怒られる...
-        this.state = {
-            //以下のデータは無くてもかまわないぽい...
-            /*
-            name:{
-                lname : '',
-                fname : ''
-            }
-            */
-        };
         this.handleSubmit=this.handleSubmit.bind(this);
     }
     
 
-    getName(){
-        //console.log('FormROOTComponent getName() called(before setState):'+getObjectStr(this.state.name));
-        //一回目はのsetStateでは反映されない！
-        //もしかしたら、this.refs.～で直接とって来るのが良いのかもしれない
-        this.setState({
-            name : this.refs.NameFormComponent.getName()
-        });
-        //console.log('FormROOTComponent getName() called(after setState):'+getObjectStr(this.state.name));
+    getValue(){
+        return this.refs.NameFormComponent.getValue();
     }
     
     handleSubmit(event){
-        console.log(this.refs.NameFormComponent.getName());
-        //console.log('FormROOTComponent handleSubmit() called(before getName())');
-        this.getName();
-        //console.log('FormROOTComponent handleSubmit() called(after getName()):'+getObjectStr(this.state.name));
+        console.log(this.getValue());
         event.preventDefault();
     }
     render(){
