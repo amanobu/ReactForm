@@ -89,6 +89,10 @@ class AddressForm extends React.Component {
         console.log("blur:"+getObjectStr(this.state.address));
     }
 
+    getValue(){
+        return this.state.address;
+    }
+
     render(){
         return (
                 <div>
@@ -120,7 +124,10 @@ class FormROOT extends React.Component {
     
 
     getValue(){
-        return this.refs.NameFormComponent.getValue();
+        var obj = {};
+        Object.assign(obj,this.refs.NameFormComponent.getValue());
+        Object.assign(obj,this.refs.AddressFormComponent.getValue());
+        return obj;
     }
     
     handleSubmit(event){
